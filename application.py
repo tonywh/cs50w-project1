@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, session
+from flask import Flask, session, render_template, request
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -20,7 +20,17 @@ Session(app)
 engine = create_engine(os.getenv("DATABASE_URL"))
 db = scoped_session(sessionmaker(bind=engine))
 
+site = "TWreads"
 
 @app.route("/")
-def index():
-    return "Project 1: TODO"
+@app.route("/", methods=["GET", "POST"])
+def signin():
+    if request.method == "GET":
+        return render_template("signin.html", site=site)
+    else:
+        # TODO: process signin request
+        pass
+
+@app.route("/signup")
+def signup():
+    return render_template("signup.html", site=site)

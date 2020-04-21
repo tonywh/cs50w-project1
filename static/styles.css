@@ -1,0 +1,21 @@
+* {
+  font-family: Arial, Helvetica, sans-serif; }
+
+.profile-box {
+  padding: 20px;
+  background-color: lightgrey;
+  border: 2px solid darkgrey;
+  margin: 0 auto;
+  width: fit-content;
+  height: 100%;
+  font-size: 1.5em; }
+  .profile-box label {
+    font-size: 0.75em; }
+  .profile-box input {
+    font-size: 1.0em; }
+  .profile-box button {
+    color: green;
+    background-color: cross-fade(lightgreen, green);
+    font-size: 1.0em; }
+
+/*# sourceMappingURL=styles.css.map */
