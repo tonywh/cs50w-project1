@@ -1,0 +1,5 @@
+.sass-cache/
+project0.css*
+.dist/
+__pycache__/
+flask_session/
