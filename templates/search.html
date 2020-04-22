@@ -1,0 +1,26 @@
+{% extends "mainview.html" %}
+
+{% block mainview %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">{{ site }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Search</li>
+    </ol>
+  </nav>
+  <h3>Search for books</h3>
+  <div class="search-form">
+    <form action="{{ url_for('search') }}" method="post">
+      <input name="searchterm" id="searchterm" type="text" placeholder="Title/Author/ISBN" value="{{ searchterm }}">
+      <button type="submit" ><i class="fa fa-search"></i></button>
+    </form>
+  </div>
+  <div class="booklist">
+    {% if booklist is defined %}
+      <br>
+      <p>Found {{ hits }} books.</p>
+      {% for book in booklist %}
+        <p>{{ book }}</p>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}

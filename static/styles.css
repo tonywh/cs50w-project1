@@ -15,7 +15,48 @@
     font-size: 1.0em; }
   .profile-box button {
     color: green;
-    background-color: cross-fade(lightgreen, green);
     font-size: 1.0em; }
+
+.alert {
+  padding: 20px;
+  background-color: pink;
+  border: 2px solid red;
+  margin: 0 auto;
+  width: fit-content;
+  height: 100%;
+  font-size: 1.5em; }
+
+.mainview {
+  padding: 20px; }
+
+.search-form {
+  width: 600px;
+  /* Style the search field */
+  /* Style the submit button */
+  /* Clear floats */ }
+  .search-form input[type=text] {
+    padding: 5px;
+    font-size: 1.2em;
+    border: 1px solid grey;
+    float: left;
+    width: auto;
+    background: #f1f1f1; }
+  .search-form button {
+    float: left;
+    width: fit-content;
+    padding: 5px;
+    background: #2196F3;
+    color: white;
+    font-size: 1.2em;
+    border: 1px solid grey;
+    border-left: none;
+    /* Prevent double borders */
+    cursor: pointer; }
+  .search-form button:hover {
+    background: #0b7dda; }
+  .search-form ::after {
+    content: "";
+    clear: both;
+    display: table; }
 
 /*# sourceMappingURL=styles.css.map */

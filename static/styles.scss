@@ -25,3 +25,55 @@ $profile-box-width: 250px;
     font-size: 1.0em;
   }
 }
+
+.alert {
+  padding: $std-pad;
+  background-color: pink;
+  border: 2px solid red;
+  margin: 0 auto;
+  width: fit-content;
+  height: 100%;
+  font-size: 1.5em;
+}
+
+.mainview {
+  padding: $std-pad;
+}
+
+.search-form {
+  width: 600px;
+
+  /* Style the search field */
+  input[type=text] {
+    padding: 5px;
+    font-size: 1.2em;
+    border: 1px solid grey;
+    float: left;
+    width: auto;
+    background: #f1f1f1;
+  }
+
+  /* Style the submit button */
+  button {
+    float: left;
+    width: fit-content;
+    padding: 5px;
+    background: #2196F3;
+    color: white;
+    font-size: 1.2em;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: #0b7dda;
+  }
+
+  /* Clear floats */
+  ::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+}

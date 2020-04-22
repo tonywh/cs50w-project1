@@ -1,17 +1,23 @@
 {% extends "profile.html" %}
 
 {% block form %}
-  <h3>Sign in to {{ site }}</h3>
-  <form action="{{ url_for('signin') }}" method="post">
+  <h3>Sign up for {{ site }}</h3>
+  <form action="{{ url_for('signup') }}" method="post">
     <label for="username">Username</label><br>
     <input name="username" id="username" type="text" placeholder="Username"><br>
+    <br>
+    <label for="fullname">Full name (optional)</label><br>
+    <input name="fullname" id="fullname" type="text" placeholder="Full name"><br>
     <br>
     <label for="password">Password</label><br>
     <input name="password" id="password" type="password" placeholder="Password"><br>
     <br>
-    <button>Sign in</button><br>
+    <label for="password2">Repeat password</label><br>
+    <input name="password2" id="password2" type="password" placeholder="Password"><br>
     <br>
-    Not a member? <a href="{{ url_for('signup') }}">Sign up</a>
+    <button>Sign up</button><br>
+    <br>
+    Already a member? <a href="{{ url_for('signin') }}">Sign in</a>
   </form>
 {% endblock %}
 

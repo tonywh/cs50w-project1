@@ -1,0 +1,11 @@
+{% extends "mainview.html" %}
+
+{% block mainview %}
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="#">{{ site }}</a></li>
+      <li class="breadcrumb-item"><a href="{{ url_for('search') }}">Search</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ booktitle }}</li>
+    </ol>
+  </nav>
+{% endblock %}
