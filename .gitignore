@@ -1,5 +1,5 @@
 .sass-cache/
-project0.css*
+*.css.map
 .dist/
 __pycache__/
 flask_session/

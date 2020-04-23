@@ -1,10 +1,12 @@
 import os
+import re
 
 from flask import Flask, session, render_template, request, redirect, url_for
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from password import *
+from rating import *
 
 app = Flask(__name__)
 
@@ -75,16 +77,28 @@ def signup():
 @app.route("/search", methods=["GET", "POST"])
 def search():
     user = session["user"]
+    if user is None:
+        return redirect(url_for("signin"))
     if request.method == "GET":
-        if user is None:
-            return redirect(url_for("signin"))
         return render_template("search.html", site=site, user=user)
     else:
         searchterm = request.form.get("searchterm").strip()
 
-        # Check ISBN only if all characters are numeric
-        if searchterm.isnumeric():
+        # Check ISBN only if correct format - use a regex to check
+        pattern = re.compile("^[0-9]{,9}[0-9xX]?$")
+        if pattern.match(searchterm):
             booklist = db.execute( "SELECT * FROM books WHERE isbn LIKE '%" + searchterm + "%'").fetchall()
             return render_template("search.html", site=site, user=user, 
                 searchterm=searchterm, hits=len(booklist), booklist=booklist)
 
+@app.route("/book/<string:isbn>", methods=["GET", "POST"])
+def book(isbn):
+    user = session["user"]
+    if user is None:
+        return redirect(url_for("signin"))
+    if request.method == "GET":
+        book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+        ratings = Rating(db, isbn)
+        return render_template("book.html", site=site, user=user, book=book, ratings=ratings)
+    else:
+        pass

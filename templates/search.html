@@ -3,7 +3,7 @@
 {% block mainview %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">{{ site }}</a></li>
+      <li class="breadcrumb-item"><a href="">{{ site }}</a></li>
       <li class="breadcrumb-item active" aria-current="page">Search</li>
     </ol>
   </nav>
@@ -19,7 +19,9 @@
       <br>
       <p>Found {{ hits }} books.</p>
       {% for book in booklist %}
-        <p>{{ book }}</p>
+        <a class="title" href="{{ url_for('book', isbn=book.isbn) }}">{{ book.title }}</a><br>
+        <span class="author">{{ book.author }}</span>
+        <span class="isbn">- ISBN {{ book.isbn }}</span><br><br>
       {% endfor %}
     {% endif %}
   </div>

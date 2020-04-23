@@ -3,9 +3,41 @@
 {% block mainview %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">{{ site }}</a></li>
+      <li class="breadcrumb-item"><a href="">{{ site }}</a></li>
       <li class="breadcrumb-item"><a href="{{ url_for('search') }}">Search</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ booktitle }}</li>
+      <li class="breadcrumb-item active" aria-current="page">{{ book.title }}</li>
     </ol>
   </nav>
+  <div class="container bookview">
+    <div class="row">
+      <div class="col-lg-1 col-sm-0">
+      </div>
+      <div class="col-lg-3 col-sm-12">
+        <img src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg">
+      </div>
+      <div class="col-lg-1 col-sm-0">
+      </div>
+      <div class="col-lg-6 col-sm-12">
+        <span class="title">{{ book.title }}</span><br>
+        <span class="author">{{ book.author }}</span>
+        <span class="isbn">- ISBN {{ book.isbn }}</span><br>
+        <br>
+        {% if ratings.ratings_count == 0 %}
+          <span class="rating">{{ site }}: no ratings</span>
+        {% else %}
+          <span class="rating">{{ site }}: rating {{ ratings.average_rating }}</span>
+          <span class="rating">({{ ratings.ratings_count }} ratings)</span>
+        {% endif %}
+        <br>
+        {% if ratings.gr_ratings_count == 0 %}
+          <span class="rating">Goodreads: no ratings</span>
+        {% else %}
+          <span class="rating">Goodreads: rating {{ ratings.gr_average_rating }}</span>
+          <span class="rating">({{ ratings.gr_ratings_count }} ratings)</span><br>
+        {% endif %}
+      </div>
+      <div class="col-lg-1 col-sm-0">
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -77,3 +77,33 @@ $profile-box-width: 250px;
     display: table;
   }
 }
+
+.booklist {
+  .title {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  .author {
+    font-size: 1em;
+  }
+  .isbn {
+    font-size: 1em;
+    color: darkgrey;
+  }
+}
+
+.bookview {
+  img {
+    width: 100%;
+  }
+  .title {
+    font-size: 2em;
+  }
+  .author {
+    font-size: 1em;
+  }
+  .isbn {
+    font-size: 1em;
+    color: darkgrey;
+  }
+}

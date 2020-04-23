@@ -59,4 +59,23 @@
     clear: both;
     display: table; }
 
+.booklist .title {
+  font-size: 1.2em;
+  font-weight: bold; }
+.booklist .author {
+  font-size: 1em; }
+.booklist .isbn {
+  font-size: 1em;
+  color: darkgrey; }
+
+.bookview img {
+  width: 100%; }
+.bookview .title {
+  font-size: 2em; }
+.bookview .author {
+  font-size: 1em; }
+.bookview .isbn {
+  font-size: 1em;
+  color: darkgrey; }
+
 /*# sourceMappingURL=styles.css.map */
