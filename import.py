@@ -23,7 +23,7 @@ def main():
     count = 0
     for isbn, title, author, year in reader:
         db.execute("INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)",
-                    {"isbn": isbn, "title": author, "author": author, "year": year})
+                    {"isbn": isbn, "title": title, "author": author, "year": year})
         print( f"Added {isbn}   {title}   {author}   {year}" )
         count += 1
     db.commit()
