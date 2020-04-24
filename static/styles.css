@@ -68,14 +68,31 @@
   font-size: 1em;
   color: darkgrey; }
 
-.bookview img {
+.bookview .bookcover {
+  padding: 20px;
   width: 100%; }
 .bookview .title {
   font-size: 2em; }
-.bookview .author {
-  font-size: 1em; }
 .bookview .isbn {
-  font-size: 1em;
   color: darkgrey; }
+
+@media (min-width: 1000px) {
+  bookview {
+    width: 960px; } }
+@media (max-width: 999px) {
+  bookview {
+    width: 100%; } }
+.own-review .heading, .own-review .username, .reviews .heading, .reviews .username {
+  font-size: 1.5em; }
+.own-review .date, .reviews .date {
+  color: darkgrey; }
+.own-review textarea, .reviews textarea {
+  width: 100%; }
+.own-review .review-display, .reviews .review-display {
+  border: none;
+  resize: none; }
+
+.reviews {
+  padding: 20px; }
 
 /*# sourceMappingURL=styles.css.map */

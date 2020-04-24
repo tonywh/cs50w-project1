@@ -93,17 +93,46 @@ $profile-box-width: 250px;
 }
 
 .bookview {
-  img {
+  .bookcover {
+    padding: $std-pad;
     width: 100%;
   }
   .title {
     font-size: 2em;
   }
-  .author {
-    font-size: 1em;
-  }
   .isbn {
-    font-size: 1em;
     color: darkgrey;
   }
+}
+
+@media (min-width: 1000px) {
+  bookview {
+    width: 1000px - 2*$std-pad
+  }
+}
+
+@media (max-width: 999px) {
+  bookview {
+    width: 100%
+  }
+}
+
+.own-review, .reviews {
+  .heading, .username {
+    font-size: 1.5em;
+  }
+  .date {
+    color: darkgrey;
+  }
+  textarea {
+    width: 100%;
+  }
+  .review-display {
+    border: none;
+    resize: none;
+  }
+}
+
+.reviews {
+  padding: $std-pad;
 }

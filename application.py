@@ -1,5 +1,6 @@
 import os
 import re
+from datetime import datetime
 
 from flask import Flask, session, render_template, request, redirect, url_for
 from flask_session import Session
@@ -74,6 +75,11 @@ def signup():
         return redirect(url_for("search"))
 
 
+@app.route("/logout")
+def logout():
+    session["user"] = None
+    return redirect(url_for("signin"))
+
 @app.route("/search", methods=["GET", "POST"])
 def search():
     user = session["user"]
@@ -96,9 +102,22 @@ def book(isbn):
     user = session["user"]
     if user is None:
         return redirect(url_for("signin"))
-    if request.method == "GET":
-        book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
-        ratings = Rating(db, isbn)
-        return render_template("book.html", site=site, user=user, book=book, ratings=ratings)
-    else:
-        pass
+    book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+
+    if request.method == "POST":
+        # Posting a review
+        rating = request.form.get("rating")
+        reviewtext = request.form.get("reviewtext")
+        timestamp = datetime.now()
+        db.execute("INSERT INTO reviews (user_id, isbn, rating, review_text, time) VALUES " +
+            "(:user_id, :isbn, :rating, :review_text, :time)",
+            {"user_id": user.id, "isbn": isbn, "rating": rating, "review_text": reviewtext, "time": timestamp})
+        db.commit()
+
+    # Display page for POST and GET methods
+    ratings = Rating(db, isbn)
+    ownreview = db.execute("SELECT * FROM reviews WHERE isbn = :isbn AND user_id= :user_id",
+        {"isbn": isbn, "user_id": user.id}).fetchone()
+    reviews = db.execute("SELECT * FROM reviews WHERE isbn = :isbn ORDER BY time DESC",
+        {"isbn": isbn}).fetchall()
+    return render_template("book.html", site=site, user=user, book=book, ratings=ratings, reviews=reviews, ownreview=ownreview)
