@@ -27,8 +27,32 @@ def main():
         print( f"Added {isbn}   {title}   {author}   {year}" )
         count += 1
     db.commit()
-
     print( f"Created books table and added {count} books" )
+
+    db.execute("CREATE TABLE reviews ( " +
+                "user_id INTEGER NOT NULL, " +
+                "isbn VARCHAR NOT NULL, " +
+                "rating INTEGER NOT NULL, " +
+                "review_text VARCHAR, " +
+                "time TIMESTAMP NOT NULL, " +
+                "PRIMARY KEY (user_id, isbn), " +
+                "CONSTRAINT reviews_isbn_fkey FOREIGN KEY (isbn) " +
+                "    REFERENCES books (isbn) MATCH SIMPLE " +
+                "    ON UPDATE NO ACTION ON DELETE NO ACTION, " +
+                "CONSTRAINT reviews_user_id_fkey FOREIGN KEY (user_id) " +
+                "    REFERENCES users (id) MATCH SIMPLE " +
+                "    ON UPDATE NO ACTION ON DELETE NO ACTION " +
+                "); " )
+    db.commit()
+    print( "Created reviews table" )
+
+    db.execute("CREATE TABLE users ( " +
+                "id SERIAL PRIMARY KEY, " +
+                "username VARCHAR UNIQUE NOT NULL, " +
+                "password VARCHAR NOT NULL, " +
+                "fullname VARCHAR )")
+    db.commit()
+    print( "Created users table" )
 
 if __name__ == "__main__":
     main()

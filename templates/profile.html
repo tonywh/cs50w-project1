@@ -6,12 +6,13 @@
       <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     </head>
     <body>
-      <div class="profile-box">
-        {% block form %}
-        {% endblock %}
-      </div>
       <div>
         {% block alert %}
+        {% endblock %}
+        <br>
+      </div>
+      <div class="profile-box">
+        {% block form %}
         {% endblock %}
       </div>
     </body>

@@ -4,10 +4,10 @@
   <h3>Sign in to {{ site }}</h3>
   <form action="{{ url_for('signin') }}" method="post">
     <label for="username">Username</label><br>
-    <input name="username" id="username" type="text" placeholder="Username"><br>
+    <input name="username" id="username" type="text" placeholder="Username" value="{{ username }}"><br>
     <br>
     <label for="password">Password</label><br>
-    <input name="password" id="password" type="password" placeholder="Password"><br>
+    <input name="password" id="password" type="password" placeholder="Password" value="{{ password }}"><br>
     <br>
     <button>Sign in</button><br>
     <br>
@@ -15,11 +15,11 @@
   </form>
 {% endblock %}
 
-{% if alert is defined %}
-  {% block alert %}
+{% block alert %}
+  {% if alert is defined %}
   <br>
   <div class="alert">
     <p>{{ alert }}</p>
   </div>
-  {% endblock %}
-{% endif %}
+  {% endif %}
+{% endblock %}

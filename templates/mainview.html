@@ -12,17 +12,17 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
   </head>
   <body>
-    <nav class="navbar navbar-light bg-light justify-content-between">
+    <nav class="navbar navbar-light navbar-custom justify-content-between">
       <a class="navbar-brand" href="#"><span class="fa fa-book"></span> {{ site }}</a>
       <span class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span class="fa fa-user icon-size"> {{ username }}</span>
+          <span class="fa fa-user icon-size"> {{ user.username }}</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
         </div>
       </span>
-  </nav>
+    </nav>
     <div class="mainview">
       {% block mainview %}
       {% endblock %}

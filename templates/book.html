@@ -3,7 +3,6 @@
 {% block mainview %}
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="">{{ site }}</a></li>
       <li class="breadcrumb-item"><a href="{{ url_for('search') }}">Search</a></li>
       <li class="breadcrumb-item active" aria-current="page">{{ book.title }}</li>
     </ol>
@@ -11,7 +10,7 @@
   <div class="container bookview">
     <div class="row">
       <div class="col-lg-4 col-sm-12">
-        <img class="bookcover" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg">
+        <img class="bookcover" alt="No bookcover available" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg">
       </div>
 
       <div class="col-lg-8 col-sm-12">
@@ -45,7 +44,7 @@
             <span class="heading">Your review</span><br>
             <label for="rating">Add your rating (1-5)</label>
             <input name="rating" id="rating" type="number" min="1" max="5" step="1" value="3"><br>
-            <textarea name="reviewtext" id="reviewtext" rows="7" placeholder="Enter your review"></textarea><br>
+            <textarea name="reviewtext" id="reviewtext" rows="7" maxlength="1000" placeholder="Enter your review"></textarea><br>
             <button>Submit</button>
           </form>
         {% else %}

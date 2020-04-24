@@ -1,8 +1,7 @@
 import os
-import re
 from datetime import datetime
 
-from flask import Flask, session, render_template, request, redirect, url_for
+from flask import Flask, session, render_template, request, redirect, url_for, jsonify
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -28,23 +27,35 @@ site = "TWreads"
 
 @app.route("/", methods=["GET", "POST"])
 def signin():
+    ''' GET - display sign in form, POST - process sign in request '''
+
     session["user"] = None
     if request.method == "GET":
-        return render_template("signin.html", site=site)
+        username = ""
+        password = ""
+        return render_template("signin.html", site=site, username=username, password=password)
     else:
         username = request.form.get("username")
         password = request.form.get("password")
         user = db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).fetchone()
         if user is None or not verify_password( user.password, password ):
-            return render_template("signin.html", site=site, alert="Incorrect username or password")
+            return render_template("signin.html", site=site, username=username, password=password, 
+                alert="Incorrect username or password")
         else:
             session["user"] = user
             return redirect(url_for("search"))
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
+    ''' GET - display sign up form, POST - process sign up request '''
+
     if request.method == "GET":
-        return render_template("signup.html", site=site)
+        username = ""
+        fullname = ""
+        password = ""
+        password2 = ""
+        return render_template("signup.html", site=site, username=username, fullname=fullname,
+            password=password, password2=password2)
     else:
         username = request.form.get("username")
         fullname = request.form.get("fullname")
@@ -77,11 +88,16 @@ def signup():
 
 @app.route("/logout")
 def logout():
+    ''' Logout current user '''
+
     session["user"] = None
     return redirect(url_for("signin"))
 
+
 @app.route("/search", methods=["GET", "POST"])
 def search():
+    ''' GET - display search form, POST - search then display search form with booklist '''
+
     user = session["user"]
     if user is None:
         return redirect(url_for("signin"))
@@ -89,16 +105,16 @@ def search():
         return render_template("search.html", site=site, user=user)
     else:
         searchterm = request.form.get("searchterm").strip()
-
-        # Check ISBN only if correct format - use a regex to check
-        pattern = re.compile("^[0-9]{,9}[0-9xX]?$")
-        if pattern.match(searchterm):
-            booklist = db.execute( "SELECT * FROM books WHERE isbn LIKE '%" + searchterm + "%'").fetchall()
-            return render_template("search.html", site=site, user=user, 
+        booklist = db.execute( "SELECT * FROM books WHERE isbn ILIKE '%" + searchterm + "%' " +
+            "OR author ILIKE '%" + searchterm + "%' " +
+            "OR title ILIKE '%" + searchterm + "%'").fetchall()
+        return render_template("search.html", site=site, user=user, 
                 searchterm=searchterm, hits=len(booklist), booklist=booklist)
 
 @app.route("/book/<string:isbn>", methods=["GET", "POST"])
 def book(isbn):
+    ''' GET - display book details, POST - store review then display book details '''
+
     user = session["user"]
     if user is None:
         return redirect(url_for("signin"))
@@ -121,3 +137,22 @@ def book(isbn):
     reviews = db.execute("SELECT * FROM reviews WHERE isbn = :isbn ORDER BY time DESC",
         {"isbn": isbn}).fetchall()
     return render_template("book.html", site=site, user=user, book=book, ratings=ratings, reviews=reviews, ownreview=ownreview)
+
+@app.route("/api/<string:isbn>")
+def flight_api(isbn):
+    ''' Get details of a book. Returns 404 if book not found.'''
+
+    book = db.execute("SELECT * FROM books WHERE isbn = :isbn", {"isbn": isbn}).fetchone()
+    if book is None:
+        return jsonify({"error": "book not found"}), 404
+
+    ratings = Rating(db, isbn)
+
+    return jsonify({
+        "title": book.title,
+        "author": book.author,
+        "year": book.year,
+        "isbn": book.isbn,
+        "review_count": ratings.ratings_count,
+        "average_score": ratings.average_rating
+        })    

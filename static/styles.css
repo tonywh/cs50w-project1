@@ -29,6 +29,13 @@
 .mainview {
   padding: 20px; }
 
+.navbar-custom {
+  background: #e0e0e0; }
+
+.breadcrumb {
+  background: white;
+  font-size: 1.2em; }
+
 .search-form {
   width: 600px;
   /* Style the search field */
