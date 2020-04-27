@@ -18,16 +18,26 @@ def main():
                 "year INTEGER NOT NULL )")
 
     print( "Created books table" )
+    print( "Importing books")
 
     headers = next( reader, None )
     count = 0
     for isbn, title, author, year in reader:
         db.execute("INSERT INTO books (isbn, title, author, year) VALUES (:isbn, :title, :author, :year)",
                     {"isbn": isbn, "title": title, "author": author, "year": year})
-        print( f"Added {isbn}   {title}   {author}   {year}" )
         count += 1
+        if count % 100 == 0:
+            print( count )
+
     db.commit()
-    print( f"Created books table and added {count} books" )
+
+    db.execute("CREATE TABLE users ( " +
+                "id SERIAL PRIMARY KEY, " +
+                "username VARCHAR UNIQUE NOT NULL, " +
+                "password VARCHAR NOT NULL, " +
+                "fullname VARCHAR )")
+    db.commit()
+    print( "Created users table" )
 
     db.execute("CREATE TABLE reviews ( " +
                 "user_id INTEGER NOT NULL, " +
@@ -45,14 +55,6 @@ def main():
                 "); " )
     db.commit()
     print( "Created reviews table" )
-
-    db.execute("CREATE TABLE users ( " +
-                "id SERIAL PRIMARY KEY, " +
-                "username VARCHAR UNIQUE NOT NULL, " +
-                "password VARCHAR NOT NULL, " +
-                "fullname VARCHAR )")
-    db.commit()
-    print( "Created users table" )
 
 if __name__ == "__main__":
     main()
