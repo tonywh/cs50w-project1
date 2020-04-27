@@ -62,6 +62,14 @@ def signup():
         password = request.form.get("password")
         password2 = request.form.get("password2")
 
+        if len(username) < 3:
+            return render_template("signup.html", site=site, username=username, fullname=fullname,
+                password=password, password2=password2, alert="Username must be at least 3 characters")
+
+        if len(password) < 3:
+            return render_template("signup.html", site=site, username=username, fullname=fullname,
+                password=password, password2=password2, alert="Password must be at least 3 characters")
+
         # Is the username in use already?
         user = db.execute("SELECT * FROM users WHERE username = :username", {"username": username}).fetchone()
         if not user is None:
