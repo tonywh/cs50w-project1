@@ -1,6 +1,0 @@
-# Setup for remote database
-# 'source' this file before running the program that will use the variables
-
-export FLASK_APP=application.py
-export FLASK_DEBUG=1
-export DATABASE_URL=postgres://yqvcwjoyedqbil:62cad8b917f1f99b3a1e4953c6fbc25e71e9a0680fba98d305148d860dc951e4@ec2-54-247-103-43.eu-west-1.compute.amazonaws.com:5432/d6og3jr44hmmdj
