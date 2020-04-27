@@ -78,6 +78,9 @@
 .bookview .bookcover {
   padding: 20px;
   width: 100%; }
+.bookview .cover-link {
+  padding-left: 20px;
+  font-size: 0.8em; }
 .bookview .title {
   font-size: 2em; }
 .bookview .isbn {

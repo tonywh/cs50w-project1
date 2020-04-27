@@ -134,7 +134,8 @@ def book(isbn):
     ratings = Rating(db, isbn)
     ownreview = db.execute("SELECT * FROM reviews WHERE isbn = :isbn AND user_id= :user_id",
         {"isbn": isbn, "user_id": user.id}).fetchone()
-    reviews = db.execute("SELECT * FROM reviews WHERE isbn = :isbn ORDER BY time DESC",
+    reviews = db.execute("SELECT * FROM reviews JOIN users ON reviews.user_id=users.id " +
+        "WHERE isbn = :isbn ORDER BY time DESC",
         {"isbn": isbn}).fetchall()
     return render_template("book.html", site=site, user=user, book=book, ratings=ratings, reviews=reviews, ownreview=ownreview)
 

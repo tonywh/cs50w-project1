@@ -11,6 +11,9 @@
     <div class="row">
       <div class="col-lg-4 col-sm-12">
         <img class="bookcover" alt="No bookcover available" src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg">
+        <span class="cover-link">
+          Cover from <a href="http://openlibrary.org/isbn/{{ book.isbn }}">openlibrary.org</a>
+        </span>
       </div>
 
       <div class="col-lg-8 col-sm-12">
@@ -63,7 +66,7 @@
         <div class="reviews">
           <span class="heading">Reviews</span><br><br>
           {% for review in reviews %}
-            <span class="fa fa-user username"> {{ review.user_id }}</span><br>
+            <span class="fa fa-user username"> {{ review.username }}</span><br>
             <span class="rating">Rating {{ review.rating }}</span><br>
             <span class="date">Reviewed on {{ review.time.year }}/{{ review.time.month }}/{{ review.time.day }}</span><br>
             <textarea readonly class="review-display">{{ review.review_text }}</textarea><br>
